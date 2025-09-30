@@ -4,7 +4,7 @@ This repository contains code related to sequencing data downstream analysis ass
 ## Abstract
 Mucosa-associated lymphoid tissue (MALT) lymphomas are a common type of primary extranodal B-cell lymphomas that arise at various mucosal sites. Here, we report a large cohort of 89 MALT lymphoma samples collected from multiple organs and subject them to bulk (n = 89), single-nucleus (n = 16) and spatial (n = 9) RNA sequencing. Integrative analysis of 120 bulk transcriptomes from our and two independent cohorts uncovers three lymphoma microenvironment (LME) subtypes-mesenchymal, inflammatory, and depleted-each with distinct phenotypic and molecular features. At single-cell and spatial resolution, we comprehensively delineate the intratumoral ecosystem, revealing divergent cellular compositions and interaction networks across LME subtypes, particularly involving B-cell activation and angiogenesis. Moreover, seven unique transcriptomic meta-programs are identified that characterize malignant B cell states, whose heterogeneous distribution suggests potential subtype-specific therapeutic vulnerabilities. Our study defines a novel LME-based classification framework for MALT lymphomas that highlights disease biology and clinical relevance.
 
-![Graphical Abstract](/images/Graphical_Abstract.PNG)
+![Graphical Abstract](/images/Graphical_Abstract.png)
 
 ## Description
 This repo contains scripts to replicate results of our current study.
