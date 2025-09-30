@@ -1,0 +1,139 @@
+# ============================================================
+# pySCENIC pipeline for fibro subset (Seurat → CSV → LOOM → SCENIC → Heatmap)
+# ============================================================
+
+# ---- R: export counts from Seurat ----
+library(Seurat)
+
+data_dir <- "../../data/snrna_rnaseq"
+
+seurat_myeloid <- readRDS(file.path(data_dir, "snrna_stromal_subset_seurat.rds"))
+seurat_fibro <- subset(
+  seurat_stromal,
+  fine_cell_type %in% c("Fibro_PI16", "Fibro_CCL19", "Fibro_LRRC15")
+)
+seurat_fibro$fine_cell_type <- droplevels(seurat_fibro$fine_cell_type)
+counts_mtx <- seurat_fibro@assays$RNA@counts
+
+write.csv(
+  t(as.matrix(counts_mtx)),
+  file = "sce_exp.csv",
+  row.names = TRUE,
+  quote = FALSE
+)
+
+# ---- Python: convert CSV to LOOM ----
+import numpy as np
+import scanpy as sc
+import loompy as lp
+
+adata = sc.read_csv("sce_exp.csv")  # rows=cells, cols=genes
+row_attrs = {"Gene": np.array(adata.var_names)}
+col_attrs = {"CellID": np.array(adata.obs_names)}
+
+lp.create("sce.loom", adata.X.T, row_attrs, col_attrs)
+print("Created sce.loom")
+
+# ---- Shell: run pySCENIC ----
+
+# activate environment
+conda activate pyscenic_env
+
+# grn
+pyscenic grn \
+--num_workers 12 \
+--output adj.sample.tsv \
+--method grnboost2 \
+sce.loom \
+hs_hgnc_tfs.tsv
+
+# cistarget
+pyscenic ctx \
+adj.sample.tsv \
+hg38_10kbp_up_10kbp_down_full_tx_v10_clust.genes_vs_motifs.rankings.feather \
+--annotations_fname motifs-v9-nr.hgnc-m0.001-o0.0.tbl \
+--expression_mtx_fname sce.loom \
+--mode "dask_multiprocessing" \
+--output reg.csv \
+--num_workers 8 \
+--mask_dropouts
+
+# aucell
+pyscenic aucell \
+sce.loom \
+reg.csv \
+--output sce_SCENIC.loom \
+--num_workers 8
+
+# ---- R: load pySCENIC results and plot heatmap ----
+library(SCENIC)
+library(Seurat)
+library(SCopeLoomR)
+library(ComplexHeatmap)
+library(circlize)
+library(RColorBrewer)
+
+data_dir <- "../../data/snrna_rnaseq"
+src_dir  <- "../source"
+fig_dir  <- "."
+
+source(file.path(src_dir, "custom_colors.R"))
+
+scenic_loom_path <- "sce_SCENIC.loom"
+loom <- open_loom(scenic_loom_path)
+
+regulons_incid_mat <- get_regulons(loom, column.attr.name = "Regulons")
+regulons <- regulonsToGeneLists(regulons_incid_mat)
+regulon_auc <- get_regulons_AUC(loom, column.attr.name = "RegulonsAUC")
+auc_mtx <- getAUC(regulon_auc[,])
+
+seurat_myeloid <- readRDS(file.path(data_dir, "snrna_stromal_subset_seurat.rds"))
+sce <- subset(
+  seurat_stromal,
+  fine_cell_type %in% c("Fibro_PI16", "Fibro_CCL19", "Fibro_LRRC15")
+)
+sce$fine_cell_type <- droplevels(sce$fine_cell_type)
+
+auc_df <- as.data.frame(t(auc_mtx))
+stopifnot(identical(rownames(auc_df), rownames(sce@meta.data)))
+auc_df$fine_cell_type <- sce$fine_cell_type
+
+mean_auc <- sapply(unique(auc_df$fine_cell_type), function(ct){
+  colMeans(auc_df[auc_df$fine_cell_type == ct, -ncol(auc_df)], na.rm = TRUE)
+})
+colnames(mean_auc) <- unique(auc_df$fine_cell_type)
+mean_auc_z <- t(scale(t(mean_auc)))
+
+target_regulons <- c("IRF1(+)", "STAT1(+)", "NFKB1(+)", "NFKB2(+)", 
+                     "FOXF1(+)", "FOXF2(+)")
+target_celltypes <- c("Fibro_PI16", "Fibro_CCL19", "Fibro_LRRC15")
+
+heatmap_input <- mean_auc_z[target_regulons, target_celltypes, drop = FALSE]
+
+col_ann <- HeatmapAnnotation(
+  celltype = colnames(heatmap_input),
+  col = list(celltype = fine_cell_type_col[colnames(heatmap_input)]),
+  simple_anno_size = unit(0.1, "cm"),
+  annotation_name_gp = gpar(fontsize = 5) 
+)
+
+pdf("fig5f.pdf", width = 8, height = 4)
+Heatmap(
+  heatmap_input,
+  col = heatmap_col2,
+  name = "Average score (z-score)",
+  cluster_columns = F,
+  cluster_rows = F,
+  show_row_dend = F,
+  show_column_names = F,
+  rect_gp = gpar(col= "white", lwd = 0.33),
+  show_heatmap_legend = T,
+  column_title_gp = gpar(fontsize = 5),
+  column_names_gp = gpar(fontsize = 5),
+  row_title_gp = gpar(fontsize = 5),
+  row_names_gp = gpar(fontsize = 5),
+  width = unit(ncol(heatmap_input)*0.24, 'cm'),
+  height = unit(nrow(heatmap_input)*0.24, 'cm'),
+  top_annotation = col_ann
+)
+dev.off()
