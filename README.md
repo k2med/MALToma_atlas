@@ -9,7 +9,7 @@ Mucosa-associated lymphoid tissue (MALT) lymphomas are a common type of primary 
 ## Description
 This repo contains scripts to replicate results of our current study.
 - Publication: *TBD*
-- Processed data: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17185611.svg)](https://doi.org/10.5281/zenodo.17185611)
+- Processed data: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19388891.svg)](https://doi.org/10.5281/zenodo.19388891)
 
 ## Contact
 For further inquiries, please raise an issue via GitHub or contact:
