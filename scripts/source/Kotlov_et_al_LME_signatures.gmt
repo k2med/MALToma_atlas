@@ -1,0 +1,22 @@
+LEC	Lymphatic endothelium	JAM3	PPP1R13B	CXCL12	PDPN	CXADR	FLT4	CCL21	FOXC2	EDNRB	LYVE1	PROX1	SOX18	JAM2																					
+VEC	Angiogenesis	CDH5	PGF	PDGFC	TEK	VEGFC	CXCL8	VWF	CXCR2	ANGPT1	CXCL5	FLT1	VEGFA	KDR	VEGFB	ANGPT2																			
+CAF	Cancer Associated Fibroblasts	COL1A1	MMP2	LGALS1	MMP7	LRP1	CD248	S100A4	FAP	FGF2	MMP9	CTGF	ACTA2	FN1	COL1A2	COL5A1	COL6A1	MMP3	CA9	PRELP	FBLN1	COL6A3	COL11A1	TGFB3	MMP12	MFAP5	MMP1	COL6A2	TIMP1	COL4A1	TGFB1	LUM	LGALS9	PTGS2	TGFB2
+FRC	Fibroblastic reticular cells	PDGFRA	ACTA2	ICAM1	NT5E	VIM	PDPN	THY1	DES	VCAM1	PTGS2	LTBR																							
+ECM	Matrix	COL1A1	COL3A1	LGALS7	FN1	VTN	COL1A2	COL4A1																											
+ECM remodeling	Matrix remodeling	TIMP1	TIMP2	MMP2	MMP9	CA9																													
+Granulocyte traffic	Granulocyte traffic	KITLG	CXCL8	CXCR1	CXCR2	CXCL5	KIT	CCL11	CCR3	CXCL1	CXCL2																								
+IS cytokines	Protumor cytokines	CCL4	IL6	TNFSF13B	MIF	CXCL8	IL22	IL10																											
+FDC	Follicular dendritic cells	PDPN	TNFRSF1A	LTBR	FDCSP	CLU	PRNP	BST1																											
+Macrophages	Macrophages	IL10	MSR1	ARG1	CSF1R	CD163	MRC1	CSF1																											
+Activated M1	M1 signature	TNF	NOS2	IL1B	CMKLR1																														
+T cells traffic	Effector cell traffic	CXCL11	CXCL10	CXCL9	CXCR3	CX3CL1	CCL5	CX3CR1																											
+MHC-II	MHCII	HLA-DQB1	HLA-DPB1	HLA-DPA1	HLA-DRA	HLA-DQA1	HLA-DMA	HLA-DRB1	HLA-DMB																										
+MHC-I	MHCI	TAP1	HLA-C	B2M	HLA-B	HLA-A	TAP2																												
+TFH	Follicular B helper T cells	CD40LG	SH2D1A	CD84	CXCR5	IL4	IL6	MAF	BCL6	IL21	ICOS																								
+Treg	Treg	CCR8	CTLA4	IKZF2	IKZF4	FOXP3	IL10	TNFRSF18																											
+TIL	T cells	CD3D	TRAT1	TBX21	TRBC2	ITK	CD28	CD3E	TRBC1	TRAC	CD3G																								
+IS checkpoints	Checkpoint inhibition	CTLA4	HAVCR2	CD274	PDCD1	BTLA	TIGIT	PDCD1LG2	LAG3																										
+NK	NK cells	SH2D1B	GZMH	GZMB	CD160	KLRK1	NCR3	CD244	IFNG	GNLY	NCR1	CD226	NKG7	EOMES	KLRC2	FGFBP2	KIR2DL4	KLRF1																	
+B cells traffic	B cell traffic	CXCL13	CXCR5	CCR6	CCL20																														
+B cells	Benign B cells	CD79B	MS4A1	STAP1	TNFRSF17	CD24	CD22	TNFRSF13B	BLK	CD19	PAX5	CD79A	TNFRSF13C	FCRL5																					
+Cell proliferation	Tumor proliferation rate	MCM6	AURKB	ESCO2	CCNB1	AURKA	MKI67	CCND1	CCNE1	MCM2	MYBL2	E2F1	CETN3	CDK2	PLK1	BUB1																			
