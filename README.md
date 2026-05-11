@@ -8,7 +8,7 @@ Mucosa-associated lymphoid tissue (MALT) lymphoma, a common primary extranodal B
 
 ## Description
 This repo contains scripts to replicate results of our current study.
-- Publication: Kang K, Wu Y, Sun X, et al. *[Cross-tissue atlas of mucosa-associated lymphoid tissue lymphomas reveals intratumoral heterogeneity and microenvironmental subtypes]*. *Cell Reports Medicine* (2026). [DOI](https://10.1016/j.xcrm.2026.102785)
+- Publication: Kang K, Wu Y, Sun X, et al. *[Cross-tissue atlas of mucosa-associated lymphoid tissue lymphomas reveals intratumoral heterogeneity and microenvironmental subtypes]*. *Cell Reports Medicine* (2026). [DOI](https://doi.org/10.1016/j.xcrm.2026.102785)
 - Processed data: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19388891.svg)](https://doi.org/10.5281/zenodo.19388891)
 
 ## Contact
